@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网页浏览器框架</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: #f0f0f0;
+        }
+        
+        .browser-header {
+            background: #ffffff;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .url-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        
+        .url-input:focus {
+            border-color: #4CAF50;
+        }
+        
+        .visit-btn {
+            padding: 10px 25px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        
+        .visit-btn:hover {
+            background: #45a049;
+        }
+        
+        .visit-btn:active {
+            background: #3d8b40;
+        }
+        
+        .iframe-container {
+            flex: 1;
+            background: white;
+            margin: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .status-bar {
+            background: #ffffff;
+            padding: 8px 15px;
+            font-size: 12px;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="browser-header">
+        <input 
+            type="text" 
+            class="url-input" 
+            id="urlInput" 
+            placeholder="输入网址，例如：https://www.example.com"
+            value="https://www.example.com"
+        >
+        <button class="visit-btn" onclick="loadPage()">访问</button>
+    </div>
+    
+    <div class="iframe-container">
+        <iframe id="contentFrame" src="about:blank"></iframe>
+    </div>
+    
+    <div class="status-bar" id="statusBar">就绪</div>
+
+    <script>
+        const urlInput = document.getElementById('urlInput');
+        const contentFrame = document.getElementById('contentFrame');
+        const statusBar = document.getElementById('statusBar');
+
+        function loadPage() {
+            let url = urlInput.value.trim();
+            
+            if (!url) {
+                statusBar.textContent = '请输入网址';
+                return;
+            }
+            
+            // 如果没有协议，自动添加 https://
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                url = 'https://' + url;
+                urlInput.value = url;
+            }
+            
+            statusBar.textContent = '正在加载: ' + url;
+            contentFrame.src = url;
+        }
+
+        // 按回车键也可以访问
+        urlInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                loadPage();
+            }
+        });
+
+        // 监听iframe加载完成
+        contentFrame.addEventListener('load', function() {
+            statusBar.textContent = '已加载: ' + contentFrame.src;
+        });
+
+        // 监听iframe加载错误
+        contentFrame.addEventListener('error', function() {
+            statusBar.textContent = '加载失败，请检查网址是否正确';
+        });
+    </script>
+</body>
+</html>
