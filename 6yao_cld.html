@@ -303,7 +303,7 @@ function generateTextOutput(yaos,gs,hasChg){
     const sy=shiyingConfig[gs];
     const matter=document.getElementById('matterInput').value.trim();
     let txt='';
-    txt+='════════════════════\n       六 爻 卦 盘\n════════════════════\n\n';
+    txt+='════════════════\n       六 爻 卦 盘\n════════════════\n\n';
     if(matter)txt+=`【卜测事项】\n${matter}\n\n`;
     if(window.currentDateGanzhi&&window.currentKongwang){
         const now=new Date();
@@ -312,7 +312,7 @@ function generateTextOutput(yaos,gs,hasChg){
         const gz=window.currentDateGanzhi;
         txt+=`【起卦时间】\n公历时间：${dStr}\n年 柱：${gz.year}（${tianganWuxing[gz.year[0]]}${dizhiWuxing[gz.year[1]]}）\n月 柱：${gz.month}（${tianganWuxing[gz.month[0]]}${dizhiWuxing[gz.month[1]]}）\n日 柱：${gz.day}（${tianganWuxing[gz.day[0]]}${dizhiWuxing[gz.day[1]]}）\n时 柱：${gz.hour}（${tianganWuxing[gz.hour[0]]}${dizhiWuxing[gz.hour[1]]}）\n空 亡：${window.currentKongwang[0]}、${window.currentKongwang[1]}\n\n`;
     }
-    txt+=`════════════════════\n【本卦】${gInfo.name}（${gInfo.gong}）${hasChg?'':'、静卦'}\n════════════════════\n\n`;
+    txt+=`════════════════\n【本卦】${gInfo.name}（${gInfo.gong}）${hasChg?'':'、静卦'}\n════════════════\n\n`;
     for(let i=5;i>=0;i--){
         const yao=yaos[i];
         const yGz=gzs[i];
@@ -339,7 +339,7 @@ function generateTextOutput(yaos,gs,hasChg){
         const bGi=guaNames[bGs];
         if(bGi){
             const bGzs=getGuaGanzhi(bGs);
-            txt+=`\n════════════════════\n【变卦】${bGi.name}（${bGi.gong}）\n════════════════════\n\n`;
+            txt+=`\n════════════════\n【变卦】${bGi.name}（${bGi.gong}）\n════════════════\n\n`;
             for(let i=5;i>=0;i--){
                 const yao=bYs[i];
                 const yGz=bGzs[i];
@@ -349,7 +349,7 @@ function generateTextOutput(yaos,gs,hasChg){
             }
         }
     }
-    txt+='\n════════════════════\n\n请解这个六爻卦。';
+    txt+='\n════════════════\n\n请解这个六爻卦。';
     document.getElementById('textContent').textContent=txt;
     window.currentGuaText=txt;
 }
